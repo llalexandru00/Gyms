@@ -68,12 +68,43 @@ int main()
 		{
 			ll a = r/pow(10, lg / 2);
 			ll b = r % (ll)pow(10, lg / 2);
+			while ((a==1 || cmmd(a) > b))
+			{
+				a--;
+				b = pow(10, lg / 2) - 1;
+				if (getCif(a) != lg / 2)
+				{
+					maxim = pow(10, lg - 1) - 1;
+					lg--;
+				}
+			}
+			lg = lg - getCif(a);
+
+			ll p = 0;
+			while (Prime[p] * Prime[p] <= a)
+			{
+				if (a%Prime[p] == 0)
+				{
+					ll b2 = b / Prime[p];
+					b2 *= Prime[p];
+					maxim = max(maxim, a*pow(10, lg) + b2);
+					b2 = b / (a / Prime[p]);
+					b2 *= a / Prime[p];
+					maxim = max(maxim, a*pow(10, lg) + b2);
+				}
+				p++;
+			}
+			if (P[a] == 0)
+			{
+				ll b2 = b / a;
+				b2 *= a;
+				maxim = max(maxim, a*pow(10, lg) + b2);
+			}
 		} 
 		else
 		{
 			ll a = r / pow(10, lg / 2 + 1);
 			ll b = r % (ll)pow(10, lg / 2 + 1);
-		}
 			while ((a == 1 || cmmd(a) > b))
 			{
 				a--;
@@ -106,6 +137,7 @@ int main()
 				b2 *= a;
 				maxim = max(maxim, a*pow(10, lg) + b2);
 			}
+		}
 		if (maxim<l)
 			cout << "Case " << i << ": " << "impossible" << '\n';
 		else
